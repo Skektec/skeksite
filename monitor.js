@@ -1,40 +1,5 @@
-const express = require("express");
-const cors = require("cors");
-const si = require("systeminformation");
+let test = "TEST";
 
-const app = express();
-const port = 3000;
+let displayElement1 = document.getElementById("cpuse");
 
-app.use(cors());
-
-app.use(express.static("public"));
-
-app.get("/metrics", async (req, res) => {
-  try {
-    const memory = await si.mem();
-    const cpu = await si.currentLoad();
-    const temp = await si.cpuTemperature();
-
-    res.json({
-      memory: {
-        total: memory.total,
-        free: memory.free,
-        used: memory.used,
-      },
-      cpu: {
-        load: cpu.currentLoad.toFixed(2),
-      },
-      temperature: {
-        main: temp.main || "N/A",
-        cores: temp.cores || [],
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error fetching metrics");
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+displayElement1.textContent = test;
