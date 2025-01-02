@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .metric {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Server Monitor</h1>
+  <div id="metrics">
+    <div class="metric">Memory: <span id="memory"></span></div>
+    <div class="metric">CPU Load: <span id="cpu"></span></div>
+    <div class="metric">Temperature: <span id="temperature"></span></div>
+  </div>
+
+  <script>
+    async function fetchMetrics() {
+      try {
+        const response = await fetch('/metrics');
+        const data = await response.json();
+
+        document.getElementById('memory').textContent =
+          `Total: ${(data.memory.total / 1e9).toFixed(2)} GB, ` +
+          `Used: ${(data.memory.used / 1e9).toFixed(2)} GB, ` +
+          `Free: ${(data.memory.free / 1e9).toFixed(2)} GB`;
+
+        document.getElementById('cpu').textContent = `${data.cpu.load}%`;
+
+        document.getElementById('temperature').textContent = 
+          `Main: ${data.temperature.main}°C, ` +
+          `Cores: ${data.temperature.cores.join(', ')}`;
+      } catch (error) {
+        console.error('Error fetching metrics:', error);
+      }
+    }
+
+    setInterval(fetchMetrics, 5000);
+    fetchMetrics();
+  </script>
+</body>
+</html>
