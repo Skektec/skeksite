@@ -1,4 +1,4 @@
-const os = require("os");
+import os from "os";
 
 function getCpuUsage() {
   const cpus = os.cpus();
