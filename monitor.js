@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Fetch CPU temperature
   fetch("/api/temperature")
     .then((response) => response.json())
     .then((data) => {
@@ -9,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("cpuTemp").innerText = "Error";
     });
 
-  // Fetch RAM usage data
   fetch("/api/ram")
     .then((response) => response.json())
     .then((data) => {
